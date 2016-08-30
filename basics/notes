@@ -1,0 +1,17 @@
+a perceptron takes several binary inputs and assigns weights to them.
+based on the weights that are assigned to the inputs, a decision can be made if the output is going to be 0 or 1. 
+all the weight-input products are summed and are checked against a threshold to check if the output is to be 0 or 1. 
+
+changing the threshold indicates a different decision making model. 
+
+perceptron bias is the negative of the threshold.
+
+wx + b <= 0 ; then output is 0 
+wx + b > 0; then output is 1. 
+
+perceptrons can also be used to implement nand, and, or gates etc. because each input can be given a weight. 
+
+sigmoid neurons take not just integer input but rather real numbers as well for weights e.g. 0.678 
+this allows a small change in weights to influence a small change in output. 
+
+
