@@ -8,7 +8,10 @@ using namespace std;
 int main() 
 { 
     vector<GrayScaleImage> images; 
-    IdxImageReader reader("../data/training/train-images-idx3-ubyte"); 
-    reader.ParseImages(images); 
+    IdxReader imagereader("../data/training/train-images-idx3-ubyte"); 
+    IdxReader labelreader("../data/training/train-labels-idx1-ubyte"); 
+
+    imagereader.ParseImages(images); 
+    labelreader.ParseLabels(images); 
     return 0; 
 } 

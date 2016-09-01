@@ -18,11 +18,12 @@ class GrayScaleImage
             fp.read(reinterpret_cast<char*>(&data[0]), rows*cols); 
         }
 
+        uint8_t label; 
+
     private: 
         std::vector<uint8_t> data; 
         uint32_t rows; 
         uint32_t cols; 
-        uint8_t label; 
 };
 
 

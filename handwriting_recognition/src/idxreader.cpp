@@ -12,12 +12,13 @@ namespace {
         return (stat (filepath, &buffer) == 0); 
     }
     
-    const uint32_t MAGIC_NUMBER = 0x00000803; 
+    const uint32_t IMAGE_MAGIC_NUMBER = 0x00000803; 
+    const uint32_t LABEL_MAGIC_NUMBER = 0x00000801; 
 }
 
 using namespace std; 
 
-IdxImageReader::IdxImageReader(const char* filepath) 
+IdxReader::IdxReader(const char* filepath) 
 { 
     if (!doesFileExist(filepath)) { 
        throw std::runtime_error("file not found\n"); 
@@ -26,7 +27,7 @@ IdxImageReader::IdxImageReader(const char* filepath)
     fp.open(filepath); 
 } 
 
-IdxImageReader::~IdxImageReader() 
+IdxReader::~IdxReader() 
 { 
     if (fp.is_open()) { 
         fp.close(); 
@@ -48,23 +49,24 @@ namespace {
 }
         
 
-void IdxImageReader::ReadMagicNumber()
+void IdxReader::ReadMagicNumber()
 {
     uint32_t magicNumber = ReadHighEndian(fp); 
 
-    if (magicNumber != MAGIC_NUMBER) { 
+    if ((magicNumber != IMAGE_MAGIC_NUMBER) && 
+        (magicNumber != LABEL_MAGIC_NUMBER)) { 
         cout << hex << magicNumber << endl;  
         throw std::runtime_error("idx magic number not found\n"); 
     } 
 }
 
-void IdxImageReader::ReadNumImages() 
+void IdxReader::ReadNumImages() 
 {
     numImages = ReadHighEndian(fp);
     cout << numImages << endl; 
 } 
 
-void IdxImageReader::ReadDimensions() 
+void IdxReader::ReadDimensions() 
 { 
     rowsPerImage = ReadHighEndian(fp); 
     cout << rowsPerImage << endl;
@@ -73,7 +75,23 @@ void IdxImageReader::ReadDimensions()
     cout << colsPerImage << endl; 
 } 
 
-void IdxImageReader::ParseImages(vector<GrayScaleImage>& images) 
+void IdxReader::ParseLabels(vector<GrayScaleImage>& images) 
+{ 
+    assert(fp.is_open()); 
+    fp.seekg(0); 
+    ReadMagicNumber();   
+    ReadNumImages();
+
+    if (images.size() != numImages) { 
+        throw std::runtime_error("number of images does not match parsed file data\n"); 
+    } 
+
+    for (auto& image: images) { 
+        fp.read(reinterpret_cast<char*>(&image.label), 1); 
+    }
+} 
+
+void IdxReader::ParseImages(vector<GrayScaleImage>& images) 
 { 
     assert(fp.is_open()); 
 

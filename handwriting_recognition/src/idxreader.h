@@ -8,16 +8,17 @@
 
 #include "grayscale_img.h" 
 
-class IdxImageReader
+class IdxReader
 { 
     public: 
-        IdxImageReader(const char* filepath); 
-        ~IdxImageReader(); 
+        IdxReader(const char* filepath); 
+        ~IdxReader(); 
 
         void ParseImages(std::vector<GrayScaleImage>& images); 
+        void ParseLabels(std::vector<GrayScaleImage>& images); 
 
-        IdxImageReader(const IdxImageReader &) = delete; 
-        IdxImageReader& operator=(const char* filepath) = delete; 
+        IdxReader(const IdxReader &) = delete; 
+        IdxReader& operator=(const char* filepath) = delete; 
     
     private: 
         void ReadMagicNumber(); 
