@@ -3,15 +3,21 @@
 #include <fstream> 
 #include <vector> 
 
-//! \class GrayScale represents a single grayscale image 
-//! 
-class GrayScaleImage
+//! GrayScale represents a single grayscale image with data and its label.
+//! It can read data from a filestream object and copy it over to internal buffer.
+class GrayscaleImage
 { 
     public: 
-        explicit GrayScaleImage(const uint32_t numrows, const uint32_t numcols):
-           rows(numrows), cols(numcols) { data.resize(rows * cols); }
+        explicit GrayscaleImage(const uint32_t numrows, const uint32_t numcols):
+           rows(numrows), cols(numcols) 
+        { 
+            data.resize(rows * cols);
+        }
 
-        ~GrayScaleImage() { data.clear(); } 
+        ~GrayscaleImage() 
+        { 
+            data.clear();
+        }
 
         void CopyFileData(std::ifstream& fp) 
         {
@@ -25,5 +31,3 @@ class GrayScaleImage
         uint32_t rows; 
         uint32_t cols; 
 };
-
-

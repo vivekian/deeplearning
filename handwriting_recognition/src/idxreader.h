@@ -1,21 +1,23 @@
 #pragma once 
 
 #include <cstdint>
-#include <iostream> 
 #include <fstream> 
+#include <iostream> 
 #include <memory> 
 #include <vector> 
 
 #include "grayscale_img.h" 
 
+//! IdxReader parses files from the Idx format. 
+//! It can read both label and image data files.
 class IdxReader
 { 
     public: 
         IdxReader(const char* filepath); 
         ~IdxReader(); 
 
-        void ParseImages(std::vector<GrayScaleImage>& images); 
-        void ParseLabels(std::vector<GrayScaleImage>& images); 
+        void ParseImages(std::vector<GrayscaleImage>& images); 
+        void ParseLabels(std::vector<GrayscaleImage>& images); 
 
         IdxReader(const IdxReader &) = delete; 
         IdxReader& operator=(const char* filepath) = delete; 
