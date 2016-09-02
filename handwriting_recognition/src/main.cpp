@@ -3,6 +3,7 @@
 
 #include "grayscale_img.h" 
 #include "idxreader.h" 
+#include "neuralnetwork.h" 
 
 using namespace std; 
 
@@ -16,6 +17,8 @@ int main()
 
         imagereader.ParseImages(images); 
         labelreader.ParseLabels(images); 
+        
+        NeuralNetwork nn({2,3,4}); 
     } catch(...) { 
         cerr << "runtime exception\n"; 
     }
